@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form action="{% url "update" %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ message }}
+        <p>{{ form.non_field_errors }}</p>
+        {{ form.as_p }}
+        <p><input type="submit" value="Update"/></p>
+    </form>
+{% endblock %}

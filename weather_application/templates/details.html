@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load temp_filter %}
+{% block content %}
+    <h1>{{ city }}</h1>
+    <table class="table table-bordered">
+        <tr>
+            <th></th>
+            <th>AVG</th>
+            <th>MIN</th>
+            <th>MAX</th>
+        </tr>
+        {% for day in weather %}
+            <tr>
+                <td><a href="/details/update?date={{ day.date|date_format }}">{{ day.date|date_format }}</a></td>
+                <td>{{ day.temperature_avg }}</td>
+                <td>{{ day.temperature_min }}</td>
+                <td>{{ day.temperature_max }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

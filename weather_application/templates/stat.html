@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load temp_filter %}
+{% block content %}
+    <table class="table table-bordered">
+        <tr>
+            <th></th>
+            {% for year in years %}
+                <th>{{ year.year }}</th>
+            {% endfor %}
+        </tr>
+        {% for month in 1|range:13 %}
+            <tr>
+                <td>{{ month }}</td>
+                {% for value in data|filter_month:month|filter_year:years %}
+                    {% if value %}
+                        <td><a href="/details?date={{ value.month|date_format }}">{{ value.min_temp}} | {{ value.max_temp }}</a></td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+    {% if years.has_other_pages %}
+        <ul class="pagination">
+            {% if years.has_previous %}
+                <li><a href="?page={{ years.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+                {% for i in years.paginator.page_range %}
+                    {% if years.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            {% if years.has_next %}
+                <li><a href="?page={{ years.next_page_number }}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+        </ul>
+{% endif %}
+{% endblock %}
