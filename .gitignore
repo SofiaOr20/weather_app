@@ -1,0 +1,5 @@
+.idea
+venv/
+weather_aggregation/migrations
+env/
+.env
